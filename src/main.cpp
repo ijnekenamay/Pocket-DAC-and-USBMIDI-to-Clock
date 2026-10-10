@@ -21,7 +21,9 @@ int main() {
             if (!tud_midi_packet_read(packet)) {
                 break;
             }
-            if (picointerface::is_midi_clock_packet(packet) && clock_divider.advance()) {
+            if (picointerface::is_midi_start_packet(packet)) {
+                clock_divider.reset();
+            } else if (picointerface::is_midi_clock_packet(packet) && clock_divider.advance()) {
                 clock_output.trigger();
             }
         }

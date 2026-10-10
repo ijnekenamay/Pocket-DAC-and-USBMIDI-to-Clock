@@ -13,9 +13,9 @@ The project was inspired by drum machines and grooveboxes used on retro handheld
 - USB Audio Class 2.0 playback: stereo, 24-bit PCM at 48 kHz
 - Asynchronous USB audio feedback synchronized to the actual I2S output clock
 - PIO-driven I2S output for a UDA1334A DAC module
-- Divides MIDI Clock from 24 PPQN to 2 PPQN: two 20 ms, 5 V clock pulses per beat
+- Divides MIDI Clock from 24 PPQN to 4 PPQN: four 20 ms, 5 V clock pulses per beat
 
-For example, a 120 BPM MIDI Clock produces 240 output pulses per minute (4 Hz). The input tempo range is up to approximately 560 BPM.
+For example, a 120 BPM MIDI Clock produces 480 output pulses per minute. After an external divide-by-2, the result is 2 PPQN (240 pulses per minute). The input tempo range is up to approximately 560 BPM.
 
 ## Wiring
 

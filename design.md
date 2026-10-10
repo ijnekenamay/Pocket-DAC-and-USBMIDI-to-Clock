@@ -6,7 +6,7 @@
 - Raspberry Pi Pico（RP2040）をUSB Audio Class 2.0のステレオ出力とUSB-MIDI機器として動作させる。
 - オーディオ形式は24-bit PCM、48 kHz。UDA1334AへPIO生成のI2Sで送信する。
 - 非同期USB Audioフィードバックで、I2S実クロックにUSB側を同期させる。
-- MIDI Clock（`0xF8`）を24 PPQNから2 PPQNへ分周し、GP15から1拍あたり2回、20 msの5 Vパルスを出力する。
+- MIDI Clock（`0xF8`）を24 PPQNから4 PPQNへ分周し、GP15から1拍あたり4回、20 msの5 Vパルスを出力する。外部で2分周した場合は2 PPQNとなる。
 - USB-Aホスト機能は現行ファームウェアの対象外。
 
 ## Raspberry Pi Pico配線
