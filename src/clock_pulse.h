@@ -1,16 +1,17 @@
 #pragma once
 
+#include "midi_clock.h"
+
 #include <cstdint>
 
 namespace picointerface {
 
 class ClockPulse {
 public:
-    static constexpr std::uint32_t pulse_width_us = 2'000;
+    static constexpr std::uint32_t pulse_width_us = 20'000;
     static constexpr std::uint32_t max_tempo_bpm = 560;
-    static constexpr std::uint32_t midi_clock_pulses_per_quarter = 24;
     static constexpr std::uint32_t minimum_interval_us =
-        60'000'000u / (max_tempo_bpm * midi_clock_pulses_per_quarter);
+        60'000'000u / (max_tempo_bpm * output_clock_pulses_per_quarter);
 
     static_assert(pulse_width_us < minimum_interval_us);
 

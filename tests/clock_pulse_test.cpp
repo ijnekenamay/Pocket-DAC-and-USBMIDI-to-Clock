@@ -10,17 +10,17 @@ int main() {
     picointerface::ClockPulse pulse;
 
     pulse.trigger(1'000);
-    assert(pulse.update(2'999));
-    assert(!pulse.update(3'000));
+    assert(pulse.update(20'999));
+    assert(!pulse.update(21'000));
 
     pulse.trigger(10'000);
     pulse.trigger(11'000);
-    assert(pulse.update(12'999));
-    assert(!pulse.update(13'000));
+    assert(pulse.update(30'999));
+    assert(!pulse.update(31'000));
 
     pulse.trigger(0xFFFFFF00u);
-    assert(pulse.update(0x000006CFu));
-    assert(!pulse.update(0x000006D0u));
+    assert(pulse.update(0x00004E1Fu));
+    assert(!pulse.update(0x00004E20u));
 
     const std::uint8_t clock_packet[4] = {0x0f, 0xf8, 0x00, 0x00};
     const std::uint8_t note_packet[4] = {0x09, 0x90, 0x3c, 0x7f};
@@ -28,6 +28,23 @@ int main() {
     assert(picointerface::is_midi_clock_packet(clock_packet));
     assert(!picointerface::is_midi_clock_packet(note_packet));
     assert(!picointerface::is_midi_clock_packet(other_realtime_packet));
+
+    picointerface::MidiClockDivider clock_divider;
+    std::uint32_t output_pulse_count = 0;
+    for (std::uint32_t tick = 0; tick < picointerface::midi_clock_ticks_per_quarter; ++tick) {
+        if (clock_divider.advance()) {
+            ++output_pulse_count;
+        }
+    }
+    assert(output_pulse_count == picointerface::output_clock_pulses_per_quarter);
+    assert(!clock_divider.advance());
+    clock_divider.reset();
+    for (std::uint32_t tick = 0; tick < picointerface::midi_clock_ticks_per_output_pulse; ++tick) {
+        const bool produced_pulse = clock_divider.advance();
+        assert(produced_pulse ==
+            (tick + 1 == picointerface::midi_clock_ticks_per_output_pulse));
+    }
+
     assert(picointerface::elapsed_usb_frames(100, 228) == 128);
     assert(picointerface::elapsed_usb_frames(2040, 120) == 128);
     assert(picointerface::elapsed_usb_frames(2040, 0) == 8);

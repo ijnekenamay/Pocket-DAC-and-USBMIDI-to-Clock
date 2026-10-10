@@ -7,6 +7,7 @@
 
 int main() {
     picointerface::ClockOutput clock_output;
+    picointerface::MidiClockDivider clock_divider;
     clock_output.initialize();
     picointerface::i2s_output_initialize();
 
@@ -20,7 +21,7 @@ int main() {
             if (!tud_midi_packet_read(packet)) {
                 break;
             }
-            if (picointerface::is_midi_clock_packet(packet)) {
+            if (picointerface::is_midi_clock_packet(packet) && clock_divider.advance()) {
                 clock_output.trigger();
             }
         }
