@@ -4,6 +4,10 @@ Pocket DAC and USBMIDI to Clock is a Raspberry Pi Pico-based audio and clock bri
 
 The project was inspired by drum machines and grooveboxes used on retro handhelds, including M8Tracker and music tools distributed through PortMaster. Connect a compatible handheld over USB to send its audio to an external I2S DAC and convert incoming MIDI Clock into 5 V clock pulses for analog gear. The handheld software must support USB audio and MIDI output; this Pico is a USB device, not a USB host.
 
+<p align="center">
+	<img src="build.jpg" alt="Pocket DAC and Raspberry Pi Pico hardware build" width="480">
+</p>
+
 ## Features
 
 - USB Audio Class 2.0 playback: stereo, 24-bit PCM at 48 kHz
@@ -25,6 +29,10 @@ MIDI Clock runs at 24 PPQN. At 560 BPM, pulses are about 4.46 ms apart.
 | GND | Common ground for the DAC and clock circuit |
 
 Do not connect GP15 directly to 5 V equipment. Use the 2N3904 output circuit and protection components. The NPN circuit inverts the signal: GP15 LOW makes the external clock output HIGH.
+
+<p align="center">
+	<img src="ChatGPT%20Image0.png" alt="Example 5 V MIDI Clock output circuit using a 2N3904 transistor" width="900">
+</p>
 
 ## Build
 
