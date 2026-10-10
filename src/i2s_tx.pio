@@ -1,0 +1,15 @@
+.program i2s_tx
+.side_set 1
+
+.wrap_target
+    set pins, 0 side 0
+    set x, 31 side 0
+left_channel:
+    out pins, 1 side 0
+    jmp x-- left_channel side 1
+    set pins, 1 side 0
+    set x, 31 side 0
+right_channel:
+    out pins, 1 side 0
+    jmp x-- right_channel side 1
+.wrap
